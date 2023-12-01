@@ -14,6 +14,12 @@
     @if ($ModalCobro)
         @include('livewire.venta.ModalCobrar')
     @endif
+    @if ($ModalTRP)
+        @include('livewire.venta.ModalTRP')
+    @endif
+    @if ($ModalCRED)
+        @include('livewire.venta.ModalCRED')
+    @endif
     <div class="container mt-14 ml-2">
         <div class="panelPV etiqueta">
             <table>
@@ -106,7 +112,7 @@
                             </th>
                         </tr>
                         <tr class="datosT text-center ">
-                            <td class="py-4">
+                            <td class="py-2">
                                 <button class="botonPV" wire:click="abrirModal(1)">
                                     <img
                                         src="https://raw.githubusercontent.com/AngelManuelCerecedo/LOGO-CBTIS/main/lupa.png">
@@ -122,7 +128,7 @@
                             </td>
                         </tr>
                         <tr class="datosT text-center">
-                            <td class="py-4">
+                            <td class="py-2">
                                 <button class="botonPV " wire:click="abrirModal(3)">
                                     <img
                                         src="https://raw.githubusercontent.com/AngelManuelCerecedo/LOGO-CBTIS/main/recibo.png">
@@ -134,6 +140,18 @@
                                     <img
                                         src="https://raw.githubusercontent.com/AngelManuelCerecedo/LOGO-CBTIS/main/venta.png">
                                     <p>Ventas</p>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="datosT text-center">
+                            <td class="">
+                                <button class="botonPV " wire:click="abrirModal(6)">
+                                    <p>Traspasos</p>
+                                </button>
+                            </td>
+                            <td class="">
+                                <button class="botonPV " wire:click="abrirModal(7)">
+                                    <p>Creditos</p>
                                 </button>
                             </td>
                         </tr>

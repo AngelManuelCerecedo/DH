@@ -35,4 +35,11 @@ class VentaController extends Controller
     public function pventaeventa($id){
       return view('ventas.PuntoVentaEVenta', ['id' => $id]);
     }
+    public function pventatraspaso()
+    {
+      return view('ventas.PuntoVentaRTraspaso');
+    }
+    public function pventaetraspaso($id){
+      return view('ventas.PuntoVentaETraspaso', ['id' => $id]);
+    }
 }

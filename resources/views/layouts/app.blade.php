@@ -192,14 +192,8 @@
                     <a href="">
                         <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Facturas</h1>
                     </a>
-                    <a href="">
-                        <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Usos de CFDI</h1>
-                    </a>
-                    <a href="">
-                        <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Cuentas por Pagar</h1>
-                    </a>
-                    <a href="">
-                        <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Cuentas por Cobrar</h1>
+                    <a href="{{ route('Creditos') }}">
+                        <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Creditos</h1>
                     </a>
                 </div>
                 <!-- CONFIGURACION -->

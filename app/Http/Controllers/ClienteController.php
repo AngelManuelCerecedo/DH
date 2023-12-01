@@ -8,7 +8,7 @@ class ClienteController extends Controller
 {
     public function cliente()
     {
-      return view('prueba.prueba');
+      return view('clientes.bcliente');
     }
     public function rcliente()
     {

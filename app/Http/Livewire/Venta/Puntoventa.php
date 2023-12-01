@@ -8,6 +8,7 @@ use App\Models\Cotizacion;
 use App\Models\FormaPago;
 use App\Models\Lote;
 use App\Models\Producto;
+use App\Models\Traspaso;
 use App\Models\Venta;
 use App\Models\Venta_Producto;
 use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
@@ -16,9 +17,9 @@ use Livewire\Component;
 class Puntoventa extends Component
 {
     public $Folio, $Estatus = 'Registro', $idaux, $Sucursal = 1, $Productos, $Cant, $search, $Desc, $Promo, $Precio = 0, $ListaFT, $Total = 0;
-    public $ModalP = false, $ModalC = false, $ModalCOT = false, $ModalV = false, $ModalCobro = false;
+    public $ModalP = false, $ModalC = false, $ModalCOT = false, $ModalV = false, $ModalCobro = false, $ModalTRP = false, $ModalCRED = false;
     public $Venta, $CD, $Clientes, $searchCliente, $Cli, $TArt = 0, $Cambio, $searchCot, $Cotizaciones, $searchVent, $Ventas;
-    public $PAGO, $FP, $CAMBIO, $FormasP, $ActualizarStock, $Lotes, $lote;
+    public $PAGO, $FP, $CAMBIO, $FormasP, $ActualizarStock, $Lotes, $lote, $searchTRP, $Traspasos;
     public function render()
     {
         $this->Productos = Almacen_Producto::Where([['almacen_id', 1], ['Stock', '!=', 'null']])->get();
@@ -53,9 +54,10 @@ class Puntoventa extends Component
         if ($this->search) {
             $Prod = Producto::Where('id', $this->search)->first();
             $this->Precio = $Prod->P1;
+            //ALMACEN VARIABLE
             $this->Lotes = Lote::Where([['producto_id', $this->search], ['almacen_id', 1], ['Cantidad', '>', '0']])->get();
             if ($this->Lotes) {
-                $CantDisp = Lote::Where([['id', $this->lote]])->first(); //ALMACEN VARIABLE
+                $CantDisp = Lote::Where([['id', $this->lote]])->first();
                 if ($CantDisp) {
                     $this->CD = $CantDisp->Cantidad;
                 }
@@ -78,6 +80,14 @@ class Puntoventa extends Component
                 ->orderBy('id', 'desc')->get(); //ALMACEN VARIABLE
         } else {
             $this->Cotizaciones = Cotizacion::Where([['producto_id', null], ['almacen_id', 1]])->orderBy('id', 'desc')->get();
+        }
+        //MODAL TRASPASO
+        if ($this->searchTRP) {
+            //Almacen VARIABLE
+            $this->Traspasos = Traspaso::Where([['Folio', 'like', '%' . $this->searchTRP . '%'], ['producto_id', null], ['almacenD_id', 1]])
+                ->orderBy('id', 'desc')->get(); //ALMACEN VARIABLE
+        } else {
+            $this->Traspasos = Traspaso::Where([['producto_id', null], ['almacenD_id', 1]])->orderBy('id', 'desc')->get();
         }
         //MODAL VENTA
         if ($this->searchVent) {
@@ -114,6 +124,12 @@ class Puntoventa extends Component
                 $this->PAGO = '';
                 $this->FormasP = '';
                 break;
+            case '6':
+                $this->ModalTRP = true;
+                break;
+            case '7':
+                $this->ModalCRED = true;
+                break;
         }
     }
     public function cerrarModal($MOD)
@@ -138,6 +154,12 @@ class Puntoventa extends Component
             case '5':
                 $this->ModalCobro = false;
                 $this->FP = '';
+                break;
+            case '6':
+                $this->ModalTRP = false;
+                break;
+            case '7':
+                $this->ModalCRED = false;
                 break;
         }
     }
@@ -195,8 +217,7 @@ class Puntoventa extends Component
         $venta = Venta::Where([['Folio', $this->Folio]])->first();
         $Cantidades = Venta_Producto::Where([['venta_id', $venta->id]])->get();
         if ($this->ListaFT != '[]') {
-            if ($this->PAGO) 
-            {
+            if ($this->PAGO) {
                 foreach ($Cantidades as $cantidad) {
                     $TotalC += $cantidad->Cantidad * $cantidad->Precio - $cantidad->Descuento;
                 }
