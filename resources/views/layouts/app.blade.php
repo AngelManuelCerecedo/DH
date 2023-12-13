@@ -17,10 +17,12 @@
     @livewireStyles
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
 
     <!-- Scripts -->
     @livewireScripts
@@ -34,10 +36,26 @@
             <ul class="menu-horizontal flex">
                 <i class="bi bi-person-circle inconP"></i>
                 <li>
-                    <a href="#">USUARIO</a>
-                    <ul class="menu-vertical">
+                    <a href="#">
+                        {{ decrypt(auth()->user()->password) }}
+                    </a>
+                    {{-- <ul class="menu-vertical">
                         <li><a href="#">Salir</a></li>
+                    </ul> --}}
+
+                    <ul>
+                        <!--Seccion cerrar sesion-->
+                        <form method="POST" action="{{ route('logout') }}" x-data>
+                            @csrf
+                            <div>
+                                <x-jet-dropdown-link class="text-gray-200" href="{{ route('logout') }}"
+                                    @click.prevent="$root.submit();">
+                                    {{ __('Cerrar Sesión') }}
+                                </x-jet-dropdown-link>
+                            </div>
+                        </form>
                     </ul>
+
                 </li>
                 <i class="bi bi-caret-down-fill down"></i>
             </ul>
@@ -145,7 +163,7 @@
                     <a href="{{ route('Almacenes') }}">
                         <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Almacenes</h1>
                     </a>
-                   <!-- <a href="">
+                    <!-- <a href="">
                         <h1 class="cursor-pointer   rounded-md  ml-5 MDA">Ajustes de Inventario</h1>
                     </a>
                     <a href="">

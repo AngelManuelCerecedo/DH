@@ -34,12 +34,27 @@ use App\Models\Sucursal;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('auth.login');
 });
 
-Route::get('/Home', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard', ['userid' => auth()->user()]);
+    })->name('dashboard');
+});
+
+
+// Route::get('/', function () {
+//     return view('dashboard');
+// });
+
+// Route::get('/Home', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 //MODULO CATALOGOS
 //PROVEEDORES

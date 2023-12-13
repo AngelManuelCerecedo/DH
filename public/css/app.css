@@ -1634,9 +1634,6 @@ select {
 .border-l-4 {
   border-left-width: 4px;
 }
-.border-r {
-  border-right-width: 1px;
-}
 .border-t {
   border-top-width: 1px;
 }
@@ -1800,6 +1797,9 @@ select {
 }
 .p-8 {
   padding: 2rem;
+}
+.p-2\.5 {
+  padding: 0.625rem;
 }
 .px-1 {
   padding-left: 0.25rem;
